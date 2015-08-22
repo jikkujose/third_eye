@@ -2,14 +2,39 @@
 App
 
 <:Body>
-<h1>WebApp</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="span4 offset4 well">
+      <legend>Report</legend>
 
-<form e-submit="add_event" role="form">
-  <div class="form-group">
-    <label>Add Event</label>
-    <input class="form-control" placeholder="Event Name" type="text" value="{{ page._event_name }}" />
-    <input class="form-control" placeholder="Location" type="text" value="{{ page._event_location }}" />
-    <input class="form-control" placeholder="Content" type="text" value="{{ page._event_content }}" />
-    <input type="submit"/>
+      <form e-submit="add_event">
+        <div class="form-group">
+          <label class="control-label">Location</label>
+          <input class="form-control" type="text" value="{{ page._location }}" autofocus />
+        </div>
+
+        <div class="form-group">
+          <label class="control-label">Sender</label>
+          <input class="form-control" placeholder="Whats your name?" value="{{ page._sender }}">
+        </div>
+
+        <div class="form-group">
+          <label class="control-label">Content</label>
+          <input class="form-control"  value="{{ page._content }}" placeholder="Brief about what happened..">
+        </div>
+
+        <div class="form-group">
+          <label class="control-label">Type</label>
+          <select class="form-control"  value="{{ page._type }}" >
+            <option>Accident</option>
+            <option>Road Rage</option>
+            <option>Hit & Run</option>
+            <option>Theft</option>
+          </select>
+        </div>
+
+        <button class="btn btn-info btn-block">Report</button>
+      </form>
+    </div>
   </div>
-</form>
+</div>

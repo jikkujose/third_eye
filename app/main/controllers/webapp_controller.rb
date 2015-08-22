@@ -1,27 +1,36 @@
 module Main
   class WebappController < Volt::ModelController
     model :store
+
     def index
+      reset_fields
     end
 
     def add_event
-      event = Event.new
-      event.name = page._event_name
-      event.location = page._event_location + ", Trivandrum"
-      event.content = page._event_content
-      event.type = "Accident"
-      event.created_time = Time.now
-      _events << event
+      _events.create({
+        sender: page._sender,
+        content: page._content,
+        type: page._type,
+        created_at: Time.now,
+        location: page._location,
+      })
+        .then { |e| }
+        .fail { |e| flash._errors << errors_for(e.keys) }
 
-      clear_page
+      reset_fields
     end
 
-    def clear_page
-      page._event_name = ""
-      page._event_location = ""
-      page._event_content = ""
+    def errors_for(array)
+      p array
+      p 'Seems there is a problem! Try checking: ' + array.map(&:capitalize).join(", ")
     end
 
+    def reset_fields
+      page._location = 'Technopark'
+      page._type = "Accident"
+      page._sender = ''
+      page._content = ''
+    end
   end
 end
 

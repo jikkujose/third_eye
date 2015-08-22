@@ -185,6 +185,7 @@ module GoogleMaps
             position: latlng_n,
             map: self.map,
             animation: google.maps.Animation.DROP,
+            optimized: false,
             title: content
           });
 

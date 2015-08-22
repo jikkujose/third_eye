@@ -1,33 +1,20 @@
 module Main
   class DashboardController < Volt::ModelController
     def index
-
-      page._address = 'Kowdiar, Trivandrum'
-      page._markers << "Medical College, Trivandrum"
-      # page._events = []
-      populate_table
+      page._default_address = 'Technopark, Trivandrum'
     end
 
-    def populate_table
-      %w[
-
-      ].each do |name|
-        page._events << {name: name, glyph: 'phone', location: random_location}
-      end
-      p page._events
+    def markers
+      # store._events.first.then {|e| e.location }
+      store._events.then { |u| p u.map(&:location) }
     end
 
-    def random_location
-      %w[
-      kowdiar
-      kudappanakunnu
-      thambanoor
-      thirumala
-      ].sample
+    def default_address
+      'Technopark, Trivandrum'
     end
 
-    def fire
-      puts 'thats cool'
+    def zoom
+      12
     end
   end
 end

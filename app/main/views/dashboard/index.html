@@ -21,7 +21,7 @@
     }
   </style>
   <div class="google-map col-md-9">
-    <:google_maps center="{{ page._address }}" markers="{{ page._markers }}"/>
+    <:google_maps center="{{ default_address }}" markers="{{ markers }}" zoom="{{ zoom }}"/>
   </div>
   <div class="col-md-3">
   <table class="table table-striped">

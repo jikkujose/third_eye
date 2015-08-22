@@ -69,16 +69,16 @@ module GoogleMaps
       `google.maps.event.addListener(self.map, 'zoom_changed', function() {
           var zoomLevel = self.map.getZoom();`
 
-          @changing_zoom = true
-          new_zoom = Native(`zoomLevel`)
-          if attrs.zoom != new_zoom && attrs.respond_to?(:zoom=)
-            attrs.zoom = new_zoom
-          end
+      @changing_zoom = true
+      new_zoom = Native(`zoomLevel`)
+      if attrs.zoom != new_zoom && attrs.respond_to?(:zoom=)
+        attrs.zoom = new_zoom
+      end
 
-          # Setup listener again
-          set_zoom
+      # Setup listener again
+      set_zoom
 
-          @changing_zoom = false
+      @changing_zoom = false
 
       `});`
 
@@ -98,7 +98,7 @@ module GoogleMaps
 
           level_n = level.to_n
           `if (self.map.getZoom() != level_n) {`
-            `self.map.setZoom(level_n);`
+          `self.map.setZoom(level_n);`
           `}`
         end
       end.watch!
@@ -145,12 +145,12 @@ module GoogleMaps
       end
 
       `this.geocoder.geocode( { 'address': address}, function(results, status) {`
-        `if (status == google.maps.GeocoderStatus.OK) {`
-          `var latlng = results[0].geometry.location;`
-          yield(Native(`latlng`))
-        `} else {`
-          yield({lat: -34.397, lng: 150.644})
-        `}`
+      `if (status == google.maps.GeocoderStatus.OK) {`
+      `var latlng = results[0].geometry.location;`
+      yield(Native(`latlng`))
+      `} else {`
+      yield({lat: -34.397, lng: 150.644})
+      `}`
       `}.bind(this));`
 
     end
@@ -173,6 +173,14 @@ module GoogleMaps
             position: latlng_n,
             map: self.map,
             title: content
+          });
+
+          var infowindow = new google.maps.InfoWindow({
+            content: content
+          });
+
+          marker.addListener('click', function() {
+              infowindow.open(map,marker);
           });
         }
 

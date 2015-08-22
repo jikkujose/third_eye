@@ -154,13 +154,9 @@ module GoogleMaps
     end
 
     def add_marker(marker_data)
-      if marker_data.is_a?(String)
-        address = marker_data
-        content = marker_data
-      else
-        address = marker_data._address.or('').to_n
-        content = marker_data._content.or(address).or('').to_n
-      end
+      address = marker_data.location
+      content = marker_data.location
+      icon = marker_data.glyph
 
       geocode(address) do |latlng|
         latlng_n = latlng.to_n

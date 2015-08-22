@@ -9,7 +9,7 @@ class SMSTask < Volt::Task
       receiver: number,
       route: 'T',
       msgtype: 1,
-      sms: message
+      sms: text
     }
 
     uri.query = URI.encode_www_form(parameters)
@@ -17,7 +17,7 @@ class SMSTask < Volt::Task
     p Net::HTTP.get_response(uri)
   end
 
-  def message
+  def text
     'Thanks for reporting to ThirdEye! We will look into it.'
   end
 end

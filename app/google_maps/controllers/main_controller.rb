@@ -69,6 +69,7 @@ module GoogleMaps
       `google.maps.event.addListener(self.map, 'zoom_changed', function() {
           var zoomLevel = self.map.getZoom();`
 
+<<<<<<< HEAD
       @changing_zoom = true
       new_zoom = Native(`zoomLevel`)
       if attrs.zoom != new_zoom && attrs.respond_to?(:zoom=)
@@ -79,6 +80,18 @@ module GoogleMaps
       set_zoom
 
       @changing_zoom = false
+=======
+          @changing_zoom = true
+          new_zoom = Native(`zoomLevel`)
+          if attrs.zoom != new_zoom && attrs.respond_to?(:zoom=)
+            attrs.zoom = new_zoom
+          end
+
+          # Setup listener again
+          set_zoom
+
+          @changing_zoom = false
+>>>>>>> 35eea2cb5593a0e09a66bdc294e09c88dbee850d
 
       `});`
 
@@ -98,7 +111,11 @@ module GoogleMaps
 
           level_n = level.to_n
           `if (self.map.getZoom() != level_n) {`
+<<<<<<< HEAD
           `self.map.setZoom(level_n);`
+=======
+            `self.map.setZoom(level_n);`
+>>>>>>> 35eea2cb5593a0e09a66bdc294e09c88dbee850d
           `}`
         end
       end.watch!
@@ -174,6 +191,7 @@ module GoogleMaps
             map: self.map,
             title: content
           });
+<<<<<<< HEAD
 
           var infowindow = new google.maps.InfoWindow({
             content: content
@@ -182,6 +200,8 @@ module GoogleMaps
           marker.addListener('click', function() {
               infowindow.open(map,marker);
           });
+=======
+>>>>>>> 35eea2cb5593a0e09a66bdc294e09c88dbee850d
         }
 
         yield Native(marker)
@@ -192,4 +212,8 @@ module GoogleMaps
       `marker.setMap(null);`
     end
   end
+<<<<<<< HEAD
 end
+=======
+end
+>>>>>>> 35eea2cb5593a0e09a66bdc294e09c88dbee850d

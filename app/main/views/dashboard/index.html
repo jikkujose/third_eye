@@ -3,4 +3,13 @@
 
 <:Body>
   <h1>Dashbaord</h1>
+  <style>
+    .google-map {
+      height: 600px;
+      width: 500px;
+    }
+  </style>
+  <div class="google-map">
+    <:google_maps center="{{ page._address }}" markers="{{ page._markers }}"/>
+  </div>
 

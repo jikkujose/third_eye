@@ -6,7 +6,7 @@ module Main
     end
 
     def about
-      # Add code for when the about view is loaded
+      page._info = GenericTask.script.then { |s| s }
     end
 
     private

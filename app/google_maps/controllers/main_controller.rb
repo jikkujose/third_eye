@@ -191,7 +191,6 @@ module GoogleMaps
             map: self.map,
             title: content
           });
-<<<<<<< HEAD
 
           var infowindow = new google.maps.InfoWindow({
             content: content
@@ -200,8 +199,6 @@ module GoogleMaps
           marker.addListener('click', function() {
               infowindow.open(map,marker);
           });
-=======
->>>>>>> 35eea2cb5593a0e09a66bdc294e09c88dbee850d
         }
 
         yield Native(marker)

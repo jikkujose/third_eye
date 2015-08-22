@@ -10,8 +10,8 @@ module Main
       event.location = page._event_location + ", Trivandrum"
       event.content = page._event_content
       event.type = "Accident"
+      event.created_time = Time.now
       _events << event
-      _events.save!
 
       clear_page
     end

@@ -8,6 +8,7 @@ module GoogleMaps
 
     def index_ready
       @markers = []
+      page._used = Hash.new { |h,k| h[k] = nil }
 
       `this.geocoder = new google.maps.Geocoder();`
 
@@ -37,11 +38,12 @@ module GoogleMaps
       -> do
         markers = attrs.markers
 
-        markers.each do |marker|
+        markers.each_with_index do |marker, i|
           add_marker(marker) do |result|
             @markers << result
           end
         end
+
 
         @add_listener.remove if @add_listener
         @remove_listener.remove if @remove_listener
@@ -49,7 +51,6 @@ module GoogleMaps
         if markers.respond_to?(:on)
           @add_listener = markers.on('added') do |index|
             marker = markers[index]
-
             add_marker(marker) do |result|
               @markers[index] = result
             end
@@ -79,16 +80,16 @@ module GoogleMaps
       set_zoom
 
       @changing_zoom = false
-          @changing_zoom = true
-          new_zoom = Native(`zoomLevel`)
-          if attrs.zoom != new_zoom && attrs.respond_to?(:zoom=)
-            attrs.zoom = new_zoom
-          end
+      @changing_zoom = true
+      new_zoom = Native(`zoomLevel`)
+      if attrs.zoom != new_zoom && attrs.respond_to?(:zoom=)
+        attrs.zoom = new_zoom
+      end
 
-          # Setup listener again
-          set_zoom
+      # Setup listener again
+      set_zoom
 
-          @changing_zoom = false
+      @changing_zoom = false
 
       `});`
 
@@ -109,7 +110,7 @@ module GoogleMaps
           level_n = level.to_n
           `if (self.map.getZoom() != level_n) {`
           `self.map.setZoom(level_n);`
-            `self.map.setZoom(level_n);`
+          `self.map.setZoom(level_n);`
           `}`
         end
       end.watch!
@@ -180,7 +181,25 @@ module GoogleMaps
         latlng_n = latlng.to_n
         marker = nil
 
-        %x{
+        should_display = true
+        dup_marker = nil
+        @markers.each do |marker|
+          if marker.position.lat == latlng.lat && marker.position.lng == latlng.lng
+            puts latlng.lng
+            puts marker.position.lng
+            puts latlng.lat
+            puts marker.position.lat
+            puts marker.title
+            puts address
+            puts "duplicate location"
+            should_display = false
+            dup_marker = marker
+            break
+          end
+        end
+
+        if should_display
+          %x{
           marker = new google.maps.Marker({
             position: latlng_n,
             map: self.map,
@@ -196,9 +215,12 @@ module GoogleMaps
           marker.addListener('click', function() {
               infowindow.open(self.map, marker);
           });
-        }
+          }
 
-        yield Native(marker)
+          yield Native(marker)
+        else
+          yield dup_marker
+        end
       end
     end
 

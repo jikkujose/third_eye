@@ -21,12 +21,12 @@
     }
   </style>
   <div class="google-map col-md-9">
-    <:google_maps center="{{ default_address }}" markers="{{ markers }}" zoom="{{ zoom }}"/>
+    <:google_maps center="{{default_address }}" markers="{{ marker.map(&:location) }}" zoom="{{ zoom }}" />
   </div>
   <div class="col-md-3">
   <table class="table table-striped">
     <tbody>
-    {{ page._events.each do |event| }}
+    {{ marker.each do |event| }}
     <tr>
       <td e-click="fire">
         <span  class="glyphicon glyphicon-{{ event._glyph }}" aria-hidden="true"></span>

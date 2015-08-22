@@ -8,7 +8,6 @@ module GoogleMaps
 
     def index_ready
       @markers = []
-      page._used = Hash.new { |h,k| h[k] = nil }
 
       `this.geocoder = new google.maps.Geocoder();`
 
@@ -36,30 +35,28 @@ module GoogleMaps
 
     def set_markers
       -> do
-        markers = attrs.markers
-
-        markers.each_with_index do |marker, i|
-          add_marker(marker) do |result|
-            @markers << result
+        store._events.all.then do |events|
+          events.each do |event|
+            add_marker(event.location) do |result|
+              @markers << result
+            end
           end
         end
-
 
         @add_listener.remove if @add_listener
         @remove_listener.remove if @remove_listener
 
-        if markers.respond_to?(:on)
-          @add_listener = markers.on('added') do |index|
-            marker = markers[index]
-            add_marker(marker) do |result|
+        @add_listener = store._events.on('added') do |index|
+          store._events[index].location.then do |location|
+            add_marker(location) do |result|
               @markers[index] = result
             end
           end
+        end
 
-          @remove_listener = markers.on('removed') do |index|
-            marker = @markers.delete_at(index)
-            remove_marker(marker.to_n)
-          end
+        @remove_listener = store._events.on('removed') do |index|
+          marker = @markers.delete_at(index)
+          remove_marker(marker.to_n)
         end
 
       end.watch!
@@ -70,16 +67,6 @@ module GoogleMaps
       `google.maps.event.addListener(self.map, 'zoom_changed', function() {
           var zoomLevel = self.map.getZoom();`
 
-      @changing_zoom = true
-      new_zoom = Native(`zoomLevel`)
-      if attrs.zoom != new_zoom && attrs.respond_to?(:zoom=)
-        attrs.zoom = new_zoom
-      end
-
-      # Setup listener again
-      set_zoom
-
-      @changing_zoom = false
       @changing_zoom = true
       new_zoom = Native(`zoomLevel`)
       if attrs.zoom != new_zoom && attrs.respond_to?(:zoom=)
@@ -110,7 +97,6 @@ module GoogleMaps
           level_n = level.to_n
           `if (self.map.getZoom() != level_n) {`
           `self.map.setZoom(level_n);`
-          `self.map.setZoom(level_n);`
           `}`
         end
       end.watch!
@@ -120,7 +106,6 @@ module GoogleMaps
       %x{
         var mapOptions = {
           center: latlng,
-          scrollwheel : false,
           zoom: 8
         };
         this.map = new google.maps.Map($(node).find('.google-map-instance').get(0), mapOptions);
@@ -181,46 +166,16 @@ module GoogleMaps
         latlng_n = latlng.to_n
         marker = nil
 
-        should_display = true
-        dup_marker = nil
-        @markers.each do |marker|
-          if marker.position.lat == latlng.lat && marker.position.lng == latlng.lng
-            puts latlng.lng
-            puts marker.position.lng
-            puts latlng.lat
-            puts marker.position.lat
-            puts marker.title
-            puts address
-            puts "duplicate location"
-            should_display = false
-            dup_marker = marker
-            break
-          end
-        end
-
-        if should_display
-          %x{
+        %x{
           marker = new google.maps.Marker({
             position: latlng_n,
+            animation : google.maps.Animation.DROP,
             map: self.map,
-            animation: google.maps.Animation.DROP,
-            optimized: false,
             title: content
           });
+        }
 
-          var infowindow = new google.maps.InfoWindow({
-            content: content
-          });
-
-          marker.addListener('click', function() {
-              infowindow.open(self.map, marker);
-          });
-          }
-
-          yield Native(marker)
-        else
-          yield dup_marker
-        end
+        yield Native(marker)
       end
     end
 

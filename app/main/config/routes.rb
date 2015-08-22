@@ -2,5 +2,6 @@
 
 client '/about', action: 'about'
 client '/dashboard', action: 'index', controller: 'dashboard'
+client '/app', action: 'index', controller: 'webapp'
 
 client '/', {}

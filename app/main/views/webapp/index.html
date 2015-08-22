@@ -1,0 +1,15 @@
+<:Title>
+App
+
+<:Body>
+<h1>WebApp</h1>
+
+<form e-submit="add_event" role="form">
+  <div class="form-group">
+    <label>Add Event</label>
+    <input class="form-control" placeholder="Event Name" type="text" value="{{ page._event_name }}" />
+    <input class="form-control" placeholder="Location" type="text" value="{{ page._event_location }}" />
+    <input class="form-control" placeholder="Content" type="text" value="{{ page._event_content }}" />
+    <input type="submit"/>
+  </div>
+</form>

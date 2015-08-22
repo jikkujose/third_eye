@@ -2,14 +2,40 @@
   Home
 
 <:Body>
-  <h1>Dashbaord</h1>
+  <div class="container">
+    <div class="row">
+      <div class="btn-group">
+        <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+          Small button <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row">
   <style>
     .google-map {
       height: 600px;
-      width: 500px;
     }
   </style>
-  <div class="google-map">
-    <:google_maps zoom="12" center="{{ page._address }}" markers="{{ page._markers }}"/>
+  <div class="google-map col-md-9">
+    <:google_maps center="{{ page._address }}" markers="{{ page._markers }}"/>
+  </div>
+  <div class="col-md-3">
+  <table class="table table-striped">
+    <tbody>
+    {{ page._events.each do |event| }}
+    <tr>
+      <td e-click="fire">
+        <span  class="glyphicon glyphicon-{{ event._glyph }}" aria-hidden="true"></span>
+      {{ event._name }}
+      </td>
+    </tr>
+    {{ end }}
+    </tbody>
+  </table>
+    </div>
   </div>
 

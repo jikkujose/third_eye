@@ -37,7 +37,7 @@ module GoogleMaps
       -> do
         store._events.all.then do |events|
           events.each do |event|
-            add_marker(event.location) do |result|
+            add_marker(event) do |result|
               @markers << result
             end
           end
@@ -47,8 +47,8 @@ module GoogleMaps
         @remove_listener.remove if @remove_listener
 
         @add_listener = store._events.on('added') do |index|
-          store._events[index].location.then do |location|
-            add_marker(location) do |result|
+          store._events[index].then do |event|
+            add_marker(event) do |result|
               @markers[index] = result
             end
           end
@@ -156,7 +156,6 @@ module GoogleMaps
     def add_marker(marker_data)
       address = marker_data.location
       content = marker_data.location
-      icon = marker_data.glyph
 
       geocode(address) do |latlng|
         latlng_n = latlng.to_n

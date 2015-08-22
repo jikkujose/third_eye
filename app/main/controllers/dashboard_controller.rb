@@ -3,8 +3,8 @@ module Main
     def index
     end
 
-    def marker
-      store._events.all.order(created_time)
+    def markers
+      store._events.all.order(:created_at)
     end
 
     def default_address

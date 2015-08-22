@@ -1,5 +1,5 @@
 <:Title>
-  Home
+Home
 
 <:Body>
 <button type="button" class="btn btn-danger btn-xs">Crash</button>
@@ -7,28 +7,28 @@
 <button type="button" class="btn btn-success btn-xs">Ambulances</button>
 <br/>
 <br/>
-  <div class="row">
+<div class="row">
   <style>
-    .google-map {
-      height: 600px;
-    }
+.google-map {
+  height: 600px;
+}
   </style>
   <div class="google-map col-md-9">
     <:google_maps center="{{default_address }}" markers="{{ marker.map(&:location) }}" zoom="{{ zoom }}" />
   </div>
   <div class="col-md-3">
-  <table class="table table-striped">
-    <tbody>
-    {{ marker.each do |event| }}
-    <tr>
-      <td e-click="fire">
-        <span  class="glyphicon glyphicon-{{ event._glyph }}" aria-hidden="true"></span>
-      {{ event._name }}
-      </td>
-    </tr>
-    {{ end }}
-    </tbody>
-  </table>
-    </div>
+    <table class="table table-striped">
+      <tbody>
+        {{ markers.each do |event| }}
+        <tr>
+          <td e-click="fire">
+            <span  class="glyphicon glyphicon-{{ event._glyph }}" aria-hidden="true"></span>
+            {{ event.sender }}
+          </td>
+        </tr>
+        {{ end }}
+      </tbody>
+    </table>
   </div>
+</div>
 

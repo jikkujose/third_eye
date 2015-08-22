@@ -191,7 +191,7 @@ module GoogleMaps
           });
 
           marker.addListener('click', function() {
-              infowindow.open(map,marker);
+              infowindow.open(self.map, marker);
           });
         }
 

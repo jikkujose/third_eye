@@ -27,7 +27,7 @@ module Main
 
     def reset_fields
       page._location = 'Technopark'
-      page._type = "Accident"
+      page._type = "accident"
       page._sender = ''
       page._content = ''
     end

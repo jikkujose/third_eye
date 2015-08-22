@@ -3,8 +3,7 @@ module Main
     def index
 
       page._address = 'Kowdiar, Trivandrum'
-      page._markers << "Kowdiar, Trivandrum"
-      page._markers << "Thirumala, Trivandrum"
+      page._markers << "Medical College, Trivandrum"
 
     end
   end

@@ -119,6 +119,7 @@ module GoogleMaps
       %x{
         var mapOptions = {
           center: latlng,
+          scrollwheel : false,
           zoom: 8
         };
         this.map = new google.maps.Map($(node).find('.google-map-instance').get(0), mapOptions);
@@ -183,6 +184,7 @@ module GoogleMaps
           marker = new google.maps.Marker({
             position: latlng_n,
             map: self.map,
+            animation: google.maps.Animation.DROP,
             title: content
           });
 

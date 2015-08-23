@@ -156,9 +156,9 @@ module GoogleMaps
 
     def marker_image(marker_data)
       case marker_data.type
-      when "Police"
+      when "flying_squad"
         image_type = "blue"
-      when "Ambulance"
+      when "ambulance"
         image_type = "green"
       else
         image_type = "red"

@@ -8,7 +8,8 @@ module Main
 
     def add_event
       _events.create({
-        sender: page._sender,
+        sender: 'WebApp',
+        mobile: page._mobile,
         content: page._content,
         type: page._type,
         created_at: Time.now,

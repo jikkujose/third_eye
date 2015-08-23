@@ -10,12 +10,12 @@ App
       <form e-submit="add_event">
         <div class="form-group">
           <label class="control-label">Location</label>
-          <input class="form-control" type="text" value="{{ page._location }}" autofocus />
+          <input class="form-control" type="text" value="{{ page._location }}" placeholder="Where did the event happen?" autofocus />
         </div>
 
         <div class="form-group">
-          <label class="control-label">Sender</label>
-          <input class="form-control" placeholder="Whats your name?" value="{{ page._sender }}">
+          <label class="control-label">Mobile</label>
+          <input class="form-control" placeholder="Your mobile number" value="{{ page._mobile }}">
         </div>
 
         <div class="form-group">
@@ -27,7 +27,7 @@ App
           <label class="control-label">Type</label>
           <select class="form-control"  value="{{ page._type }}" >
             <option value="accident">Accident</option>
-            <option value="road_range">Road Rage</option>
+            <option value="road_rage">Road Rage</option>
             <option value="hit_and_run">Hit & Run</option>
             <option value="theft">Theft</option>
           </select>

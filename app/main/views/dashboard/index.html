@@ -2,8 +2,8 @@
 Home
 
 <:Body>
-<button type="button" class="btn btn-danger btn-xs">Crash</button>
-<button type="button" class="btn btn-info btn-xs">Flying Squads</button>
+<button type="button" class="btn btn-danger btn-xs" e-click="filter_events('emergencies')">Crash</button>
+<button type="button" class="btn btn-info btn-xs" e-click="flying_squads">Flying Squads</button>
 <button type="button" class="btn btn-success btn-xs">Ambulances</button>
 <br/>
 <br/>
@@ -14,21 +14,18 @@ Home
 }
   </style>
   <div class="google-map col-md-9">
-    <:google_maps center="{{default_address }}" markers="{{ marker.map(&:location) }}" zoom="{{ zoom }}" />
+    <:google_maps center="{{ page._address }}" markers="{{ markers.map(&:lrocation) }}" zoom="{{ page._zoom }}" />
   </div>
   <div class="col-md-3">
-    <table class="table table-striped">
-      <tbody>
-        {{ markers.each do |event| }}
-        <tr>
-          <td e-click="fire">
-            <span  class="glyphicon glyphicon-{{ event.glyph }}" aria-hidden="true"></span>
-            {{ event.sender }}
-          </td>
-        </tr>
-        {{ end }}
-      </tbody>
-    </table>
+    <div class="list-group">
+      {{ markers.each do |e| }}
+      <a href="#" class="list-group-item" e-click='locate(e.location)' location='{{ e.location }}'>
+        <span  class="glyphicon glyphicon-{{ e.glyph }}" aria-hidden="true"></span>
+        <span class="list-group-item-heading"><strong>{{ e.type_pretty }}</strong></span>
+        <p class="list-group-item-text">{{ e.content }} at <strong> {{ e._location }} </strong> via <strong> {{ e.mobile }} </strong></p>
+      </a>
+      {{ end }}
+    </div>
   </div>
 </div>
 

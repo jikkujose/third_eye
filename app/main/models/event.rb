@@ -24,6 +24,16 @@ class Event < Volt::Model
       'theft' => 'exclamation-sign',
       'flying_squad' => 'star',
       'ambulance' => 'plus',
+      'sos' => 'phone',
     }[get('type').downcase]
+  end
+
+  def type_pretty
+    return 'SOS' if get('type') == 'sos'
+
+    get('type')
+      .split('_')
+      .map { |word| word == 'and' ? word : word.capitalize }
+      .join(" ")
   end
 end

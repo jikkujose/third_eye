@@ -18,7 +18,7 @@ Home
   </div>
   <div class="col-md-3">
     <div class="list-group">
-      {{ page._markers.each do |e| }}
+      {{ page._markers.reverse.each do |e| }}
       <a href="#" class="list-group-item" e-click='locate(e.location)' location='{{ e.location }}'>
         <span  class="glyphicon glyphicon-{{ e.glyph }}" aria-hidden="true"></span>
         <span class="list-group-item-heading"><strong>{{ e.type_pretty }}</strong></span>

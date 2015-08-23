@@ -11,7 +11,7 @@ module Main
       @add_listener = store._events.on('added') do |index|
         store._events[index].then do |event|
           if check_event_type(page._type, event)
-            page._markers << event
+            page._markers = markers
           end
         end
       end

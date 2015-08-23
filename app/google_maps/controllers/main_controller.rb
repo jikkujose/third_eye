@@ -105,6 +105,7 @@ module GoogleMaps
     def setup_map(node, latlng)
       %x{
         var mapOptions = {
+          scrollwheel: false,
           center: latlng,
           zoom: 8
         };
@@ -153,9 +154,25 @@ module GoogleMaps
 
     end
 
+    def marker_image(marker_data)
+      case marker_data.type
+      when "Police"
+        image_type = "blue"
+      when "Ambulance"
+        image_type = "green"
+      else
+        image_type = "red"
+      end
+      image_type
+    end
+
     def add_marker(marker_data)
       address = marker_data.location
       content = marker_data.location
+      image_type = marker_image marker_data
+      puts image_type
+      image_url = "/assets/google_maps/assets/images/#{image_type}.png"
+      puts image_url
 
       geocode(address) do |latlng|
         latlng_n = latlng.to_n
@@ -166,7 +183,8 @@ module GoogleMaps
             position: latlng_n,
             animation : google.maps.Animation.DROP,
             map: self.map,
-            title: content
+            title: content,
+            icon: image_url
           });
         }
 

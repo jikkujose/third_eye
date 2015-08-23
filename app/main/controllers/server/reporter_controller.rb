@@ -52,5 +52,20 @@ module Main
         m[:content]
       end
     end
+
+    def create_event
+      store._events.create({
+        sender: params._sender,
+        content: params._content,
+        created_at: Time.now,
+        type: params._type,
+        location: params._location,
+        mobile: params._mobile,
+      })
+
+
+      p params._name
+      render text: 'Hey'
+    end
   end
 end

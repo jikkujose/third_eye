@@ -22,6 +22,12 @@
 * Volt
 * Ruby
 
+## API Documentation
+
+Any device can send event data to the system using the following API:
+
+`http://54.148.254.0/api/event\?sender\='GPS_Tracker'\&content\='Traffic increase'\&location\='Status'\&type\='gps_tracker'\&mobile\='989897665'`
+
 ## About
 
 Project implemented as part of [Kerala Road Safety Hackathon](http://keralaroadsafetyhack.com/)

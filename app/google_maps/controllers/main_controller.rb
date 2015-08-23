@@ -186,6 +186,12 @@ module GoogleMaps
             title: content,
             icon: image_url
           });
+
+          function moveBus( map, marker, lat, lng ) {
+            marker.setPosition( new google.maps.LatLng( lat, lng ) );
+            map.panTo( new google.maps.LatLng( lat, lng ) );
+          };
+
         }
 
         yield Native(marker)

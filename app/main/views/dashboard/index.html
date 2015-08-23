@@ -22,7 +22,7 @@ Home
         {{ markers.each do |event| }}
         <tr>
           <td e-click="fire">
-            <span  class="glyphicon glyphicon-{{ event._glyph }}" aria-hidden="true"></span>
+            <span  class="glyphicon glyphicon-{{ event.glyph }}" aria-hidden="true"></span>
             {{ event.sender }}
           </td>
         </tr>

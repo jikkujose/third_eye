@@ -18,10 +18,12 @@ class Event < Volt::Model
 
   def glyph
     {
-      'accident' => 'search',
-      'hit_and_run' => 'search',
-      'road_rage' => 'search',
-      'theft' => 'search',
+      'accident' => 'certificate',
+      'hit_and_run' => 'transfer',
+      'road_rage' => 'flash',
+      'theft' => 'exclamation-sign',
+      'flying_squad' => 'star',
+      'ambulance' => 'plus',
     }[get('type').downcase]
   end
 end

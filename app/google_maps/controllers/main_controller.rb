@@ -33,12 +33,27 @@ module GoogleMaps
       @remove_listener.remove if @remove_listener
     end
 
+    def check_event_type(filter, event)
+      if filter == "all"
+        return !(event.type == "flying_squad" || event.type == "ambulance")
+      end
+      (event.type ==  filter)
+    end
+
     def set_markers
       -> do
+
+        @markers.each do |marker|
+          remove_marker(marker.to_n)
+        end
+        @markers = []
+
         store._events.all.then do |events|
           events.each do |event|
-            add_marker(event) do |result|
-              @markers << result
+            if check_event_type(attrs.filter, event)
+              add_marker(event) do |result|
+                @markers << result
+              end
             end
           end
         end
@@ -48,8 +63,10 @@ module GoogleMaps
 
         @add_listener = store._events.on('added') do |index|
           store._events[index].then do |event|
-            add_marker(event) do |result|
-              @markers[index] = result
+            if check_event_type(attrs.filter, event)
+              add_marker(event) do |result|
+                @markers[index] = result
+              end
             end
           end
         end
@@ -121,7 +138,7 @@ module GoogleMaps
 
       set_zoom if attrs.respond_to?(:zoom)
 
-      set_markers if attrs.respond_to?(:markers)
+      set_markers if attrs.respond_to?(:filter)
 
       setup_zoom if attrs.respond_to?(:zoom=)
     end
@@ -170,9 +187,7 @@ module GoogleMaps
       address = marker_data.location
       content = marker_data.location
       image_type = marker_image marker_data
-      puts image_type
       image_url = "/assets/google_maps/assets/images/#{image_type}.png"
-      puts image_url
 
       geocode(address) do |latlng|
         latlng_n = latlng.to_n

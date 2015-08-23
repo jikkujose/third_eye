@@ -5,6 +5,16 @@ module Main
       page._zoom = zoom
       page._type = "all"
       page._markers = markers
+
+      @add_listener.remove if @add_listener
+
+      @add_listener = store._events.on('added') do |index|
+        store._events[index].then do |event|
+          if check_event_type(page._type, event)
+            page._markers << event
+          end
+        end
+      end
     end
 
     def locate(location)

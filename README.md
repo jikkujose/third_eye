@@ -46,5 +46,5 @@ The project is just a proof of concept implemented in 24 hours. And there might 
 
 ## Result
 
-The project [won](http://s9.postimg.org/x3g8n5njz/image.jpg) first prize in software category.
+The project [won](http://www.thehindu.com/news/cities/Thiruvananthapuram/new-ideas-at-road-safety-hackathon/article7574163.ece) first prize in software category.
 ![prize](https://github.com/JikkuJose/third_eye/raw/master/README/prize.jpg)

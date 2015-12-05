@@ -47,3 +47,4 @@ The project is just a proof of concept implemented in 24 hours. And there might 
 ## Result
 
 The project [won](http://s9.postimg.org/x3g8n5njz/image.jpg) first prize in software category.
+![prize](https://github.com/JikkuJose/third_eye/raw/master/README/prize.jpg)
